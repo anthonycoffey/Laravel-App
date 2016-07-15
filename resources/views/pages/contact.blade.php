@@ -19,5 +19,5 @@
 @stop
 
 @section('footer')
-    <script> alert("Test"); </script>
+    
 @stop
