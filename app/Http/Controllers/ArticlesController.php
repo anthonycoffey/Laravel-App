@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Request;
-
 use App\Http\Requests;
+use App\Http\Requests\ArticleRequest;
 use App\Article;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
@@ -53,15 +53,38 @@ class ArticlesController extends Controller
      * 
      * @return Response
      */
-    public function store(Requests\CreateArticle $request){
+    public function store(ArticleRequest $request){
         
         // validation
         
-        Article::create(Request::all());
+        Article::create($request->all());
         
         return redirect('articles');
         
     }
     
-
+    /*
+     * Save a new article
+     * 
+     * @param $id
+     * @return Response
+     * 
+     */
+    
+    public function edit($id){
+        
+        $article = Article::findOrFail($id);
+        
+        return view('articles.edit', compact('article'));
+        
+    }
+    
+    public function update($id, ArticleRequest $request){
+        
+        $article = Article::findOrFail($id);
+        
+        $article->update($request->all());
+        
+        return redirect('articles');
+    }
 }
