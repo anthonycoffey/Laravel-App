@@ -10,6 +10,12 @@ use Carbon\Carbon;
 
 class ArticlesController extends Controller
 {
+    /*
+     * Show all articles
+     * 
+     * @return Response
+     * 
+     */
      public function index(){
         
         $articles = Article::latest('published_at')->published()->get();
@@ -18,6 +24,13 @@ class ArticlesController extends Controller
         
     }
     
+    /*
+     * Show a single article
+     * 
+     * @param integer $id
+     * @return Response
+     * 
+     */
     public function show($id){
         
         $article = Article::findOrFail($id);
@@ -26,11 +39,23 @@ class ArticlesController extends Controller
         
     }
     
+    /*
+     * Show the page to create an article
+     * 
+     * @return Response
+     */
     public function create(){
         return view('articles.create');
     }
     
-    public function store(){
+    /*
+     * Save a new article
+     * 
+     * @return Response
+     */
+    public function store(Requests\CreateArticle $request){
+        
+        // validation
         
         Article::create(Request::all());
         
